@@ -1,0 +1,48 @@
+{
+  "name": "dsh-senses",
+  "version": "0.1.0",
+  "type": "module",
+  "description": "让 DSH 能听声音、看视频、画图、出片、说话。五个能力，一套配置，零第三方依赖。",
+  "main": "./lib/index.js",
+  "exports": {
+    ".": "./lib/index.js",
+    "./client": "./lib/client.js",
+    "./cordis.patch.yml": "./cordis.patch.yml",
+    "./locale/en.json": "./locale/en.json",
+    "./locale/zh.json": "./locale/zh.json",
+    "./icon": "./icon.svg",
+    "./docs/DETAIL.md": "./docs/DETAIL.md",
+    "./package.json": "./package.json"
+  },
+  "engines": {
+    "node": ">=22"
+  },
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    },
+    "client": {
+      "inject": [
+        "@deepseek-ai/dsh-client-connection"
+      ],
+      "platform": "web"
+    }
+  },
+  "files": [
+    "lib",
+    "cordis.patch.yml",
+    "locale",
+    "icon.svg",
+    "docs",
+    "README.md"
+  ],
+  "keywords": [
+    "dsh-plugin",
+    "multimodal",
+    "asr",
+    "text-to-image",
+    "text-to-video",
+    "tts"
+  ],
+  "license": "MIT"
+}

@@ -1,0 +1,7 @@
+{
+  "meta": {
+    "title": "Multimodal Senses",
+    "description": "Hear audio, watch video, draw images, generate clips, speak text. Five capabilities, one config, no third-party dependencies.",
+    "detail": "docs/DETAIL.md"
+  }
+}

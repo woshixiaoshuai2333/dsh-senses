@@ -1,0 +1,7 @@
+{
+  "meta": {
+    "title": "多模态感官",
+    "description": "听声音、看视频、画图、出片、说话。五个能力，一套配置，零第三方依赖。",
+    "detail": "docs/DETAIL.md"
+  }
+}
