@@ -1,8 +1,8 @@
 # dsh-senses
 
-给 DeepSeek Harness 补上五种感官：听声音、看视频、画图、出片、说话。
+给 [DeepSeek Harness](https://github.com/deepseek-ai) 补上五种感官：听声音、看视频、画图、出片、说话。
 
-零 npm 依赖，不用编译，不用后台服务。
+零 npm 依赖，不用编译，不用另开后台服务。
 
 ## 五个工具
 
@@ -16,26 +16,54 @@
 
 ## 安装
 
+需要 Node ≥ 22 和 DSH 桌面版（自带 Node，不用另装）。
+
 ```bash
-dsh plugin --profile desktop add /path/to/dsh-senses
+dsh plugin --profile desktop add dsh-senses
 ```
 
 装完在 DSH 的插件列表里能看到「多模态感官」。
 
-## 配置
+从源码装（自己改了代码想试）：
 
-设置面板里会多出「多模态感官」，能改 key、改每个能力接哪家模型、改输出目录。
-配置存在 `~/.dsh/dsh-senses/config.json`，也可以直接手改。
+```bash
+dsh plugin --profile desktop add D:\path\to\dsh-senses
+```
 
-不配置也能跑：key 会依次从 `~/.dsh/.credentials.yaml` 的 `QW_API_KEY`、环境变量 `QW_API_KEY` 里找。
+装完**不用重启**，插件热加载。改完代码想让它重新加载，在插件列表里关掉再打开即可。
+
+## 30 秒上手
+
+1. 打开 DSH 设置 →「多模态感官」
+2. 在「服务商与 key」里粘上千问的 key（`sk-` 开头那串）
+3. 回到对话，直接说人话：
+
+```
+听听 D:\录音\会议.wav
+看看这个视频 https://example.com/a.mp4
+画一只橘猫趴在窗台看夕阳，水彩风
+生成一段 5 秒的视频：黄昏的海边，白裙女孩走在浅水里
+把「你好世界」念出来
+```
+
+不配 key 也能跑：会依次从 `~/.dsh/.credentials.yaml` 的 `QW_API_KEY`、环境变量 `QW_API_KEY` 里找。
+
+## 换别家模型
+
+设置页里改得到的是千问的地址和 key。五个能力里：
+
+- **能换**：看图看视频（OpenAI 标准的 `/chat/completions`）、生图（`/images/generations`）
+- **换不了**：听声音转写、文字转语音、文字生视频——这三个走的是千问私有的原生接口，别家没有同款形状
+
+所以插件里留了「智谱（可选）」这个适配层，但默认没启用，因为它的免费额度实际是扣赠送次数，容易让人误以为在省钱。
 
 ## 关于费用
 
 五个能力全部按量计费。
 
-唯一的 0 元兜底是 `speak`：千问的语音合成不可用时会退到 Windows 自带的本地语音合成，不联网、不花钱。
+唯一的 0 元兜底是 `speak`：千问的语音合成不可用时会退到 Windows 自带的本地语音合成，不联网、不花钱。这一条只在 Windows 上有效，Mac/Linux 会自动跳过。
 
-插件里没有「免费档」开关。那些标着免费的第三方模型，实际是消耗赠送额度或赠送次数，既不是真 0 元，额度还带有效期，容易让人误以为在省钱。所以默认只留一条清楚的付费链。
+插件里没有「免费档」开关。那些标着免费的第三方模型，实际是消耗赠送额度或赠送次数，既不是真 0 元，额度还带有效期。所以默认只留一条清楚的付费链。
 
 初步报价（会变，以平台价目表为准）：转写几厘一次；看视频几分钱；生图几分钱一张；生视频 480P 约 0.45 元/秒。
 
@@ -47,6 +75,16 @@ dsh plugin --profile desktop add /path/to/dsh-senses
 
 不需要 ffmpeg 的：公网视频链接、听声音、画图、出视频、说话。
 
+## 输出文件在哪
+
+默认 `D:\dsh\dsh-senses-output`（没有 D 盘就用 E、F…）。分三个子目录：
+
+- `images-<时间>/` 每次生图一个目录
+- `videos/` 生成的视频
+- `audio/` 合成的语音
+
+设置页里能改。
+
 ## 卸载
 
 ```bash
@@ -56,7 +94,7 @@ dsh plugin --profile desktop remove dsh-senses
 再删掉这两处就干净了：
 
 - `~/.dsh/dsh-senses`（配置 + 日志）
-- 输出目录（默认 `D:\dsh\dsh-senses-output`，可在设置页改）
+- 输出目录（默认 `D:\dsh\dsh-senses-output`）
 
 > 从早期版本 `dsh-qwen-mm` 升级上来的，输出目录可能还留在 `D:\dsh\qwen-mm-output`（旧名），确认没用了再删。
 > 插件本身不会删你的文件。
@@ -67,4 +105,4 @@ dsh plugin --profile desktop remove dsh-senses
 
 ## 许可
 
-MIT
+[MIT](./LICENSE)
